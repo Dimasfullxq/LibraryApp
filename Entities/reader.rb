@@ -8,7 +8,7 @@ class Reader
   attr_reader :street
   attr_reader :house
 
-  def initialize(name, email, city, street, house)
+  def initialize(name:, email:, city:, street:, house:)
     @name = String(name)
     @email = String(email)
     @city = String(city)

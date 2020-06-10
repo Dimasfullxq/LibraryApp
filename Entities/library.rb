@@ -27,13 +27,13 @@ class Library
   def top_reader(num = 1)
     top_readers = []
     readers = []
-    top_entity(num, top_readers, readers, :reader)
+    top_entity(num: num, top_entities: top_readers, entities: readers, entity_name: :reader)
   end
 
   def most_popular_books(num = 1)
     top_books = []
     books = []
-    top_entity(num, top_books, books, :book)
+    top_entity(num: num, top_entities: top_books, entities: books, entity_name: :book)
   end
 
   def number_of_readers_of_the_most_popular_books(num = 3)
@@ -47,7 +47,7 @@ class Library
     readers.uniq { |reader| reader[:reader] }.size
   end
 
-  def save(authors, readers, books, orders)
+  def save(authors:, readers:, books:, orders:)
     data = { authors: authors, readers: readers, books: books, orders: orders }
     file = File.open('data.yml', 'w')
     file.write(data.to_yaml)
@@ -64,7 +64,7 @@ class Library
 
   private
 
-  def top_entity(num, top_entities, entities, entity_name)
+  def top_entity(num:, top_entities:, entities:, entity_name:)
     @readers_with_orders.uniq.each { |entity| entities.push(entity[entity_name]) }
     while num.positive?
       top_entity_var = entities.max_by { |entity| entities.count(entity) }
