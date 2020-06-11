@@ -8,6 +8,8 @@ require_relative 'entities/reader'
 require_relative 'entities/book'
 require_relative 'entities/order'
 
+puts 'Hello World'
+
 authors = []
 readers = []
 orders = []
