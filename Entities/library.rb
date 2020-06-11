@@ -2,24 +2,19 @@
 
 # Library Class
 class Library
-  attr_reader :authors
   attr_reader :orders
-  attr_reader :readers_with_orders
 
   def initialize
-    @authors = []
     @orders = []
-    @readers_with_orders = []
   end
 
   def add_order(orders)
     orders.each do |order|
-      @orders.push(order)
       readers_with_books = {
         reader: order.reader,
         book: order.book
       }
-      @readers_with_orders.push(readers_with_books)
+      @orders.push(readers_with_books)
     end
   end
 
@@ -38,7 +33,7 @@ class Library
   def number_of_readers_of_the_most_popular_books(num = 3)
     readers = []
     top_books = most_popular_books(num)
-    top_books.each { |book| readers += @readers_with_orders.uniq.select { |order| order[:book] == book } }
+    top_books.each { |book| readers += @orders.uniq.select { |order| order[:book] == book } }
     readers.uniq { |reader| reader[:reader] }.size
   end
 
@@ -56,7 +51,7 @@ class Library
   private
 
   def top_entity(num:, top_entities:, entities:, entity_name:)
-    @readers_with_orders.uniq.each { |entity| entities.push(entity[entity_name]) }
+    @orders.uniq.each { |entity| entities.push(entity[entity_name]) }
     while num.positive?
       top_entity_current = entities.max_by { |entity| entities.count(entity) }
       top_entities.push(top_entity_current)
