@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'yaml'
 # Library Class
 class Library
   attr_reader :authors
@@ -38,12 +37,8 @@ class Library
 
   def number_of_readers_of_the_most_popular_books(num = 3)
     readers = []
-    books = []
     top_books = most_popular_books(num)
-    @readers_with_orders.uniq.each { |book| books.push(book) }
-    top_books.each do |book|
-      readers += books.select { |b| b[:book] == book }
-    end
+    top_books.each { |book| readers += @readers_with_orders.uniq.select { |order| order[:book] == book } }
     readers.uniq { |reader| reader[:reader] }.size
   end
 
@@ -51,15 +46,11 @@ class Library
     data = { authors: authors, readers: readers, books: books, orders: orders }
     file = File.open('data.yml', 'w')
     file.write(data.to_yaml)
-    puts 'Data saved in file'
     file.close
-    puts 'File after writing is closed' if file.closed?
   end
 
   def load
     YAML.load_file('data.yml')
-  ensure
-    puts 'Data has been loaded from file'
   end
 
   private
@@ -67,9 +58,9 @@ class Library
   def top_entity(num:, top_entities:, entities:, entity_name:)
     @readers_with_orders.uniq.each { |entity| entities.push(entity[entity_name]) }
     while num.positive?
-      top_entity_var = entities.max_by { |entity| entities.count(entity) }
-      top_entities.push(top_entity_var)
-      entities.delete(top_entity_var)
+      top_entity_current = entities.max_by { |entity| entities.count(entity) }
+      top_entities.push(top_entity_current)
+      entities.delete(top_entity_current)
       num -= 1
     end
     top_entities

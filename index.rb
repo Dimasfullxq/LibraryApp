@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'yaml'
 require_relative 'entities/library'
 require_relative 'entities/author'
 require_relative 'entities/reader'
@@ -47,7 +48,7 @@ orders.push(order1, order2, order3, order4, order5, order6, order7, order8)
 library.save(authors: authors, readers: readers, books: books, orders: orders)
 
 data_from_file = library.load
-orders_from_file = data_from_file.select { |k, _v| k == :orders }.values[0]
+orders_from_file = data_from_file.select { |key, _value| key == :orders }.values[0]
 library.add_order(orders_from_file)
 puts library.top_reader(2)
 puts library.most_popular_books(2)
