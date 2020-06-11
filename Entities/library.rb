@@ -2,6 +2,7 @@
 
 # Library Class
 class Library
+  include Validate
   attr_reader :orders
 
   def initialize

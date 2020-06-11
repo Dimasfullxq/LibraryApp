@@ -2,6 +2,7 @@
 
 # Reader Class
 class Reader
+  include Validate
   attr_reader :name
   attr_reader :email
   attr_reader :city
@@ -9,10 +10,10 @@ class Reader
   attr_reader :house
 
   def initialize(name:, email:, city:, street:, house:)
-    @name = String(name)
-    @email = String(email)
-    @city = String(city)
-    @street = String(street)
-    @house = Integer(house)
+    @name = valid(name, 'String')
+    @email = valid(email, 'String')
+    @city = valid(city, 'String')
+    @street = valid(street, 'String')
+    @house = valid(house, 'Integer')
   end
 end

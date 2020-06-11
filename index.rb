@@ -2,6 +2,7 @@
 
 require 'date'
 require 'yaml'
+require_relative 'entities/validate'
 require_relative 'entities/library'
 require_relative 'entities/author'
 require_relative 'entities/reader'
@@ -15,11 +16,11 @@ books = []
 
 library = Library.new
 
-auhtor1 = Author.new('Stan Lee')
-auhtor2 = Author.new('Tony Stark')
-auhtor3 = Author.new('Steve Rojers')
+author1 = Author.new('Stan Lee')
+author2 = Author.new('Tony Stark')
+author3 = Author.new('Steve Rojers')
 
-authors.push(auhtor1, auhtor2, auhtor3)
+authors.push(author1, author2, author3)
 
 reader1 = Reader.new(name: 'Dima', email: 'gliffy', city: 'Dnepr', street: 'Sokol', house: 1)
 reader2 = Reader.new(name: 'Liza', email: 'liza', city: 'Dnepr', street: 'Mur', house: 12)
@@ -27,10 +28,10 @@ reader3 = Reader.new(name: 'Tima', email: 'tima@', city: 'Dnper', street: 'Simph
 
 readers.push(reader1, reader2, reader3)
 
-book1 = Book.new('Spider-Man', auhtor1)
-book2 = Book.new('Hulk', auhtor2)
-book3 = Book.new('Iron', auhtor3)
-book4 = Book.new('Cap', auhtor1)
+book1 = Book.new('Spider-Man', author1)
+book2 = Book.new('Hulk', author2)
+book3 = Book.new('Iron', author3)
+book4 = Book.new('Cap', author1)
 
 books.push(book1, book2, book3, book4)
 

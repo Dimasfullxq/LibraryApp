@@ -2,11 +2,12 @@
 
 # Book class
 class Book
+  include Validate
   attr_reader :title
   attr_reader :author
 
   def initialize(title, author)
-    @title = String(title)
-    @author = String(author)
+    @title = valid(title, 'String')
+    @author = valid(author, 'Author')
   end
 end
