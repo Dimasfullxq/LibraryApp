@@ -3,6 +3,7 @@
 # Library Class
 class Library
   include Validate
+  LIBRARY_DATA_FILE = 'data.yml'
   attr_reader :library_data
 
   def initialize
@@ -36,13 +37,13 @@ class Library
 
   def save(authors:, readers:, books:, orders:)
     data = { authors: authors, readers: readers, books: books, orders: orders }
-    file = File.open('data.yml', 'w')
+    file = File.open(LIBRARY_DATA_FILE, 'w')
     file.write(data.to_yaml)
     file.close
   end
 
   def load
-    YAML.load_file('data.yml')
+    YAML.load_file(LIBRARY_DATA_FILE)
   end
 
   private
