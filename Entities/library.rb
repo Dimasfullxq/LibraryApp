@@ -3,20 +3,16 @@
 # Library Class
 class Library
   include Validate
-  attr_reader :orders
+  attr_reader :library_data
 
   def initialize
-    @orders = []
+    @library_data = {
+      authors: [], readers: [], books: [], orders: []
+    }
   end
 
-  def add_order(orders)
-    orders.each do |order|
-      readers_with_books = {
-        reader: order.reader,
-        book: order.book
-      }
-      @orders.push(readers_with_books)
-    end
+  def add(entity, entity_type)
+    entity.is_a?(Array) ? @library_data[entity_type] += entity : @library_data[entity_type] << entity
   end
 
   def top_reader(num = 1)
@@ -34,7 +30,7 @@ class Library
   def number_of_readers_of_the_most_popular_books(num = 3)
     readers = []
     top_books = most_popular_books(num)
-    top_books.each { |book| readers += @orders.uniq.select { |order| order[:book] == book } }
+    top_books.each { |book| readers += orders_get.uniq.select { |order| order[:book] == book } }
     readers.uniq { |reader| reader[:reader] }.size
   end
 
@@ -51,8 +47,17 @@ class Library
 
   private
 
+  def orders_get
+    orders = []
+    @library_data[:orders].each do |order|
+      readers_with_books = { reader: order.reader, book: order.book }
+      orders.push(readers_with_books)
+    end
+    orders
+  end
+
   def top_entity(num:, top_entities:, entities:, entity_name:)
-    @orders.uniq.each { |entity| entities.push(entity[entity_name]) }
+    orders_get.uniq.each { |entity| entities.push(entity[entity_name]) }
     while num.positive?
       top_entity_current = entities.max_by { |entity| entities.count(entity) }
       top_entities.push(top_entity_current)

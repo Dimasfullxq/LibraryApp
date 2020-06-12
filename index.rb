@@ -49,8 +49,22 @@ orders.push(order1, order2, order3, order4, order5, order6, order7, order8)
 library.save(authors: authors, readers: readers, books: books, orders: orders)
 
 data_from_file = library.load
-orders_from_file = data_from_file.select { |key, _value| key == :orders }.values[0]
-library.add_order(orders_from_file)
+
+get_data = proc do |data_container, data_type|
+  data_container.select { |key, _value| key == data_type }.values[0]
+end
+
+orders_from_file = get_data.call(data_from_file, :orders)
+readers_from_file = get_data.call(data_from_file, :readers)
+books_from_file = get_data.call(data_from_file, :books)
+authors_from_file = get_data.call(data_from_file, :authors)
+
+library.add(orders_from_file, :orders)
+library.add(authors_from_file, :authors)
+library.add(books_from_file, :books)
+library.add(readers_from_file, :readers)
+library.add(Author.new('Steven King'), :authors)
+
 puts library.top_reader(2)
 puts library.most_popular_books(2)
 puts library.number_of_readers_of_the_most_popular_books(1)
