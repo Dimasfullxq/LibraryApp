@@ -2,7 +2,6 @@
 
 # Library Class
 class Library
-  include Validate
   LIBRARY_DATA_FILE = 'data.yml'
   attr_reader :library_data
 

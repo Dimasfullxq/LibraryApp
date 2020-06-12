@@ -1,14 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
-require 'yaml'
-require_relative 'modules/validate'
-require_relative 'modules/errors'
-require_relative 'entities/library'
-require_relative 'entities/author'
-require_relative 'entities/reader'
-require_relative 'entities/book'
-require_relative 'entities/order'
+require_relative 'config/load'
 
 authors = []
 readers = []
@@ -23,9 +15,9 @@ author3 = Author.new('Steve Rojers')
 
 authors.push(author1, author2, author3)
 
-reader1 = Reader.new(name: 'Dima', email: 'gliffy', city: 'Dnepr', street: 'Sokol', house: 1)
-reader2 = Reader.new(name: 'Liza', email: 'liza', city: 'Dnepr', street: 'Mur', house: 12)
-reader3 = Reader.new(name: 'Tima', email: 'tima@', city: 'Dnper', street: 'Simph', house: 3)
+reader1 = Reader.new(name: 'Dima', email: 'gliffy@ukr.net', city: 'Dnepr', street: 'Sokol', house: 1)
+reader2 = Reader.new(name: 'Liza', email: 'liza@gmail.com', city: 'Dnepr', street: 'Mur', house: 12)
+reader3 = Reader.new(name: 'Tima', email: 'tima@gmail.com', city: 'Dnper', street: 'Simph', house: 3)
 
 readers.push(reader1, reader2, reader3)
 
