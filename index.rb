@@ -2,7 +2,7 @@
 
 require 'date'
 require 'yaml'
-require_relative 'entities/validate'
+require_relative 'modules/validate'
 require_relative 'entities/library'
 require_relative 'entities/author'
 require_relative 'entities/reader'

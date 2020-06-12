@@ -7,7 +7,7 @@ class Author
   attr_reader :biography
 
   def initialize(name, biography = 'A good author')
-    @name = valid(name, 'String')
+    @name = name if valid(name, 'String')
     @biography = String(biography)
   end
 end

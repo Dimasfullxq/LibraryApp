@@ -10,10 +10,10 @@ class Reader
   attr_reader :house
 
   def initialize(name:, email:, city:, street:, house:)
-    @name = valid(name, 'String')
-    @email = valid(email, 'String')
-    @city = valid(city, 'String')
-    @street = valid(street, 'String')
-    @house = valid(house, 'Integer')
+    @name = name if valid(name, 'String')
+    @email = email if valid(email, 'String')
+    @city = city if valid(city, 'String')
+    @street = street if valid(street, 'String')
+    @house = house if valid(house, 'Integer')
   end
 end

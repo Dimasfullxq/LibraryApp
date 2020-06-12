@@ -26,7 +26,7 @@ module Validate
     raise string_class_validate if field.class != String
     raise string_size_validate if field.empty? || field.start_with?(' ')
 
-    field
+    true
   end
 
   def validate_integer(field)
@@ -35,7 +35,7 @@ module Validate
     raise integer_class_validate if field.class != Integer
     raise integer_negative_validate if field.negative?
 
-    field
+    true
   end
 
   def validate_class(field, field_type)
@@ -44,6 +44,6 @@ module Validate
     class_validation = CustomValidate.new(message)
     raise class_validation unless VALIDATE_CLASSES.include?(field_class)
 
-    field
+    true
   end
 end

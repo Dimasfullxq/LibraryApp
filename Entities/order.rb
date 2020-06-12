@@ -8,8 +8,8 @@ class Order
   attr_reader :date
 
   def initialize(reader:, book:, date: Date.today)
-    @reader = valid(reader, 'Reader')
-    @book = valid(book, 'Book')
+    @reader = reader if valid(reader, 'Reader')
+    @book = book if valid(book, 'Book')
     @date = date
   end
 end
