@@ -10,10 +10,20 @@ class Reader
   attr_reader :house
 
   def initialize(name:, email:, city:, street:, house:)
-    @name = name if valid(name, 'String')
-    @email = email if valid(email, 'String')
-    @city = city if valid(city, 'String')
-    @street = street if valid(street, 'String')
-    @house = house if valid(house, 'Integer')
+    validate(name, email, city, street, house: house)
+    @name = name
+    @email = email
+    @city = city
+    @street = street
+    @house = house
+  end
+
+  private
+
+  def validate(*fields, house:, fields_class: String, house_class: Integer)
+    validate_class(*fields, fields_class)
+    validate_class(house, house_class)
+    validate_string(*fields)
+    validate_integer(house)
   end
 end

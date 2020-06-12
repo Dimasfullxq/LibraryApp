@@ -50,10 +50,7 @@ class Library
 
   def orders_get
     orders = []
-    @library_data[:orders].each do |order|
-      readers_with_books = { reader: order.reader, book: order.book }
-      orders.push(readers_with_books)
-    end
+    @library_data[:orders].each { |order| orders << { reader: order.reader, book: order.book } }
     orders
   end
 

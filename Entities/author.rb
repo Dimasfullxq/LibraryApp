@@ -7,7 +7,15 @@ class Author
   attr_reader :biography
 
   def initialize(name, biography = 'A good author')
-    @name = name if valid(name, 'String')
+    validate(name)
+    @name = name
     @biography = String(biography)
+  end
+
+  private
+
+  def validate(name, field_class = String)
+    validate_class(name, field_class)
+    validate_string(name)
   end
 end
