@@ -11,8 +11,11 @@ class Library
     }
   end
 
-  def add(entity, entity_type)
-    entity.is_a?(Array) ? @library_data[entity_type] += entity : @library_data[entity_type] << entity
+  def add(*entities)
+    entities.each do |entity|
+      entity_type = entity.class.to_s.downcase.concat('s').to_sym
+      @library_data[entity_type] << entity
+    end
   end
 
   def top_reader(num = 1)

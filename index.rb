@@ -43,20 +43,16 @@ library.save(authors: authors, readers: readers, books: books, orders: orders)
 
 data_from_file = library.load
 
-get_data = proc do |data_container, data_type|
-  data_container.select { |key, _value| key == data_type }.values[0]
-end
+orders_from_file = data_from_file[:orders]
+readers_from_file = data_from_file[:readers]
+books_from_file = data_from_file[:books]
+authors_from_file = data_from_file[:readers]
 
-orders_from_file = get_data.call(data_from_file, :orders)
-readers_from_file = get_data.call(data_from_file, :readers)
-books_from_file = get_data.call(data_from_file, :books)
-authors_from_file = get_data.call(data_from_file, :authors)
-
-library.add(orders_from_file, :orders)
-library.add(authors_from_file, :authors)
-library.add(books_from_file, :books)
-library.add(readers_from_file, :readers)
-library.add(Author.new('Steven King'), :authors)
+orders_from_file.each { |order| library.add(order) }
+readers_from_file.each { |reader| library.add(reader) }
+books_from_file.each { |book| library.add(book) }
+authors_from_file.each { |author| library.add(author) }
+library.add(Author.new('Steven King'), Author.new('Jerome Salinger'))
 
 puts library.top_reader(2)
 puts library.most_popular_books(2)
