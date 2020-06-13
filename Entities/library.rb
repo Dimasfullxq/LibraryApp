@@ -16,22 +16,18 @@ class Library
   end
 
   def top_reader(num = 1)
-    top_readers = []
-    readers = []
-    top_entity(num: num, top_entities: top_readers, entities: readers, entity_name: :reader)
+    top_entity(num: num, entity_name: :reader)
   end
 
   def most_popular_books(num = 1)
-    top_books = []
-    books = []
-    top_entity(num: num, top_entities: top_books, entities: books, entity_name: :book)
+    top_entity(num: num, entity_name: :book)
   end
 
   def number_of_readers_of_the_most_popular_books(num = 3)
     readers = []
     top_books = most_popular_books(num)
     top_books.each { |book| readers += orders_get.uniq.select { |order| order[:book] == book } }
-    readers.uniq { |reader| reader[:reader] }.size
+    readers.map { |reader| reader[:reader] }.uniq.size
   end
 
   def save(authors:, readers:, books:, orders:)
@@ -48,17 +44,14 @@ class Library
   private
 
   def orders_get
-    orders = []
-    @library_data[:orders].each { |order| orders << { reader: order.reader, book: order.book } }
-    orders
+    @library_data[:orders].map { |order| { reader: order.reader, book: order.book } }
   end
 
-  def top_entity(num:, top_entities:, entities:, entity_name:)
-    orders_get.uniq.each { |entity| entities.push(entity[entity_name]) }
+  def top_entity(num:, top_entities: [], entity_name:)
+    entities = orders_get.uniq.map { |entity| entity[entity_name] }
     while num.positive?
-      top_entity_current = entities.max_by { |entity| entities.count(entity) }
-      top_entities.push(top_entity_current)
-      entities.delete(top_entity_current)
+      top_entities << entities.max_by { |entity| entities.count(entity) }
+      entities.delete(top_entities.last)
       num -= 1
     end
     top_entities
