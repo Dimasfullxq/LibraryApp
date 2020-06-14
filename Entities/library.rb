@@ -52,10 +52,9 @@ class Library
 
   def top_entity(num:, top_entities: [], entity_name:)
     entities = orders_get.uniq.map { |entity| entity[entity_name] }
-    while num.positive?
+    num.times do
       top_entities << entities.max_by { |entity| entities.count(entity) }
       entities.delete(top_entities.last)
-      num -= 1
     end
     top_entities
   end
