@@ -2,6 +2,7 @@
 
 # Library Class
 class Library
+  include Uploader
   LIBRARY_DATA_FILE = 'data.yml'
   attr_reader :library_data
 
@@ -31,17 +32,6 @@ class Library
     top_books = most_popular_books(num)
     top_books.each { |book| readers += orders_get.uniq.select { |order| order[:book] == book } }
     readers.map { |reader| reader[:reader] }.uniq.size
-  end
-
-  def save(authors:, readers:, books:, orders:)
-    data = { authors: authors, readers: readers, books: books, orders: orders }
-    file = File.open(LIBRARY_DATA_FILE, 'w')
-    file.write(data.to_yaml)
-    file.close
-  end
-
-  def load
-    YAML.load_file(LIBRARY_DATA_FILE)
   end
 
   private

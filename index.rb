@@ -39,9 +39,12 @@ order8 = Order.new(reader: reader3, book: book4)
 
 orders.push(order1, order2, order3, order4, order5, order6, order7, order8)
 
-library.save(authors: authors, readers: readers, books: books, orders: orders)
+data = { authors: authors, readers: readers, books: books, orders: orders }
+library.save(Library::LIBRARY_DATA_FILE, data)
 
-data_from_file = library.load
+# library.save(authors: authors, readers: readers, books: books, orders: orders)
+
+data_from_file = library.load(Library::LIBRARY_DATA_FILE)
 
 orders_from_file = data_from_file[:orders]
 readers_from_file = data_from_file[:readers]
