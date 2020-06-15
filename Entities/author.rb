@@ -14,8 +14,8 @@ class Author
 
   private
 
-  def validate(name, field_class = String)
-    validate_class(name, field_class)
+  def validate(name)
+    validate_class(name, String)
     validate_string(name)
   end
 end
