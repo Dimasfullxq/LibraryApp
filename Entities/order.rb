@@ -8,7 +8,7 @@ class Order
   attr_reader :date
 
   def initialize(reader:, book:, date: Date.today)
-    validate(reader: reader, book: book)
+    validate(reader, book)
     @reader = reader
     @book = book
     @date = date
@@ -16,8 +16,8 @@ class Order
 
   private
 
-  def validate(reader:, book:, reader_class: Reader, book_class: Book)
-    validate_class(reader, reader_class)
-    validate_class(book, book_class)
+  def validate(reader, book)
+    validate_class(reader, Reader)
+    validate_class(book, Book)
   end
 end

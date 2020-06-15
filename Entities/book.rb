@@ -7,16 +7,16 @@ class Book
   attr_reader :author
 
   def initialize(title, author)
-    validate(title: title, author: author)
+    validate(title, author)
     @title = title
     @author = author
   end
 
   private
 
-  def validate(title:, author:, title_class: String, author_class: Author)
-    validate_class(title, title_class)
-    validate_class(author, author_class)
+  def validate(title, author)
+    validate_class(title, String)
+    validate_class(author, Author)
     validate_string(title)
   end
 end

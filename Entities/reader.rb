@@ -20,9 +20,9 @@ class Reader
 
   private
 
-  def validate(*fields, house:, fields_class: String, house_class: Integer)
-    validate_class(*fields, fields_class)
-    validate_class(house, house_class)
+  def validate(*fields, house:)
+    validate_class(*fields, String)
+    validate_class(house, Integer)
     validate_string(*fields)
     validate_integer(house)
   end
