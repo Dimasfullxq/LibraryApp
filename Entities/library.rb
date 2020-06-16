@@ -2,50 +2,49 @@
 
 # Library Class
 class Library
-  include Uploader
   LIBRARY_DATA_FILE = 'data.yml'
+  include Uploader
   attr_reader :library_data
 
   def initialize
-    @library_data = {
-      authors: [], readers: [], books: [], orders: []
-    }
+    @authors = []
+    @orders = []
+    @books = []
+    @readers = []
   end
 
   def add(*entities)
     entities.each do |entity|
-      entity_type = entity.class.to_s.downcase.concat('s').to_sym
-      @library_data[entity_type] << entity
+      case entity
+      when Book then @books << entity
+      when Author then @authors << entity
+      when Order then @orders << entity
+      when Reader then @readers << entity
+      end
     end
   end
 
   def top_reader(num = 1)
-    top_entity(num: num, entity_name: :reader)
+    top_entity(num, :reader)
   end
 
   def most_popular_books(num = 1)
-    top_entity(num: num, entity_name: :book)
+    top_entity(num, :book)
   end
 
   def number_of_readers_of_the_most_popular_books(num = 3)
-    readers = []
-    top_books = most_popular_books(num)
-    top_books.each { |book| readers += orders_get.uniq.select { |order| order[:book] == book } }
-    readers.map { |reader| reader[:reader] }.uniq.size
+    most_popular_books(num).map { |book| orders_get.select { |order| order[:book] == book } }
+                           .flatten.uniq { |order| order[:reader] }.size
   end
 
   private
 
   def orders_get
-    @library_data[:orders].map { |order| { reader: order.reader, book: order.book } }
+    @orders.map { |order| { reader: order.reader, book: order.book } }
   end
 
-  def top_entity(num:, top_entities: [], entity_name:)
-    entities = orders_get.uniq.map { |entity| entity[entity_name] }
-    num.times do
-      top_entities << entities.max_by { |entity| entities.count(entity) }
-      entities.delete(top_entities.last)
-    end
-    top_entities
+  def top_entity(num, entity_name)
+    entities = orders_get.map { |entity| entity[entity_name] }.uniq
+    entities.sort_by { |entity| -entities.count(entity) }.first(num)
   end
 end
