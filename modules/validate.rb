@@ -7,7 +7,7 @@ module Validate
   end
 
   def validate_integer(*fields)
-    fields.each { |field| raise Errors::NegativeIntegerError if field.negative? }
+    fields.each { |field| raise Errors::PositiveIntegerError unless field.positive? }
   end
 
   def validate_class(*fields, field_class)

@@ -17,7 +17,7 @@ module Errors
   end
 
   # NegativeIntegerError class
-  class NegativeIntegerError < StandardError
+  class PositiveIntegerError < StandardError
     def initialize(message = 'Number can not be negative')
       super(message)
     end
