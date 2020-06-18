@@ -8,7 +8,9 @@ module Uploader
     file.close
   end
 
+  private
+
   def load(file_name)
-    YAML.load_file(file_name)
+    File.file?(file_name) && !File.zero?(file_name) ? YAML.load_file(file_name) : {}
   end
 end

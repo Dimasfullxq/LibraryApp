@@ -22,4 +22,11 @@ module Errors
       super(message)
     end
   end
+
+  # WrongAddingType class
+  class WrongTypeAdded < StandardError
+    def initialize(message = 'Wrong type added to library. It must be only Author, Reader, Book, Order')
+      super(message)
+    end
+  end
 end

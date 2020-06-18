@@ -7,10 +7,10 @@ class Library
   attr_reader :library_data
 
   def initialize
-    @authors = []
-    @orders = []
-    @books = []
-    @readers = []
+    @authors = load(LIBRARY_DATA_FILE)[:authors] || []
+    @orders = load(LIBRARY_DATA_FILE)[:orders] || []
+    @books = load(LIBRARY_DATA_FILE)[:books] || []
+    @readers = load(LIBRARY_DATA_FILE)[:readers] || []
   end
 
   def add(*entities)
@@ -20,8 +20,13 @@ class Library
       when Author then @authors << entity
       when Order then @orders << entity
       when Reader then @readers << entity
+      else raise Errors::WrongTypeAdded
       end
     end
+  end
+
+  def store
+    { authors: @authors, books: @books, readers: @readers, orders: @orders }
   end
 
   def top_reader(num = 1)
