@@ -4,7 +4,10 @@
 class Library
   LIBRARY_DATA_FILE = 'data.yml'
   include Uploader
-  attr_reader :library_data
+  attr_reader :authors
+  attr_reader :orders
+  attr_reader :books
+  attr_reader :readers
 
   def initialize
     @authors = load(LIBRARY_DATA_FILE)[:authors] || []
