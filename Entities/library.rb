@@ -4,10 +4,7 @@
 class Library
   LIBRARY_DATA_FILE = 'data.yml'
   include Uploader
-  attr_reader :authors
-  attr_reader :orders
-  attr_reader :books
-  attr_reader :readers
+  attr_reader :authors, :orders, :books, :readers
 
   def initialize
     @data = load(LIBRARY_DATA_FILE)
@@ -34,26 +31,22 @@ class Library
   end
 
   def top_reader(num = 1)
-    top_entity(num, :reader)
+    top_entity(num: num, entity_name: :reader, uniq_field: :book)
   end
 
   def most_popular_books(num = 1)
-    top_entity(num, :book)
+    top_entity(num: num, entity_name: :book, uniq_field: :reader)
   end
 
   def number_of_readers_of_the_most_popular_books(num = 3)
-    most_popular_books(num).map { |book| orders_get.select { |order| order[:book] == book } }
-                           .flatten.uniq { |order| order[:reader] }.size
+    most_popular_books(num).map { |book| @orders.select { |order| order.book == book } }
+                           .flatten.uniq(&:reader).size
   end
 
   private
 
-  def orders_get
-    @orders.map { |order| { reader: order.reader, book: order.book } }
-  end
-
-  def top_entity(num, entity_name)
-    entities = orders_get.map { |entity| entity[entity_name] }.uniq
-    entities.sort_by { |entity| -entities.count(entity) }.first(num)
+  def top_entity(num:, entity_name:, uniq_field:)
+    entities = @orders.group_by(&entity_name).flat_map { |_key, orders| orders.uniq(&uniq_field) }.map(&entity_name)
+    entities.sort_by { |entity| -entities.count(entity) }.uniq.first(num)
   end
 end
