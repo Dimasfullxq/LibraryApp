@@ -10,10 +10,11 @@ class Library
   attr_reader :readers
 
   def initialize
-    @authors = load(LIBRARY_DATA_FILE)[:authors] || []
-    @orders = load(LIBRARY_DATA_FILE)[:orders] || []
-    @books = load(LIBRARY_DATA_FILE)[:books] || []
-    @readers = load(LIBRARY_DATA_FILE)[:readers] || []
+    @data = load(LIBRARY_DATA_FILE)
+    @authors = @data[:authors] || []
+    @orders = @data[:orders] || []
+    @books = @data[:books] || []
+    @readers = @data[:readers] || []
   end
 
   def add(*entities)
