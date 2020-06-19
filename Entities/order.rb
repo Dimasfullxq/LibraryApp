@@ -3,9 +3,7 @@
 # Order Class
 class Order
   include Validate
-  attr_reader :reader
-  attr_reader :book
-  attr_reader :date
+  attr_reader :reader, :book, :date
 
   def initialize(reader:, book:, date: Date.today)
     validate(reader, book)

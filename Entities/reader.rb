@@ -3,11 +3,7 @@
 # Reader Class
 class Reader
   include Validate
-  attr_reader :name
-  attr_reader :email
-  attr_reader :city
-  attr_reader :street
-  attr_reader :house
+  attr_reader :name, :email, :city, :street, :house
 
   def initialize(name:, email:, city:, street:, house:)
     validate(name, email, city, street, house: house)

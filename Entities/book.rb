@@ -3,8 +3,7 @@
 # Book class
 class Book
   include Validate
-  attr_reader :title
-  attr_reader :author
+  attr_reader :title, :author
 
   def initialize(title, author)
     validate(title, author)
